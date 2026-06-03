@@ -25,7 +25,6 @@ const app = express();
 const corsOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://spur-assignment.vercel.app',
   process.env.FRONTEND_URL
 ].filter((origin): origin is string => Boolean(origin));
 
@@ -38,6 +37,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Log CORS configuration for debugging
+console.log('CORS Origins Allowed:', corsOrigins);
 
 // Input validation schema
 const chatSchema = z.object({
