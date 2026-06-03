@@ -61,8 +61,8 @@ app.post('/api/chat/message', async (req, res) => {
             take: 10,
         });
         const formattedHistory = rawHistory
-            .filter(m => m.sender === 'user' || m.sender === 'ai')
-            .map(m => ({
+            .filter((m) => m.sender === 'user' || m.sender === 'ai')
+            .map((m) => ({
             role: m.sender === 'user' ? 'user' : 'assistant',
             content: m.text
         }));
