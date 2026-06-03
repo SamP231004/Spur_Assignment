@@ -1,8 +1,5 @@
 {
   "version": 2,
   "buildCommand": "npm run build && npm run prisma:generate",
-  "installCommand": "npm install",
-  "env": {
-    "FRONTEND_URL": "@frontend_url"
-  }
+  "installCommand": "npm install"
 }
