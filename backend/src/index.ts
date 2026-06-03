@@ -20,10 +20,24 @@ const adapter = new PrismaNeon({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-// ... (Keep your chatSchema and routes exactly the same below this line)
+// Configure CORS for Vercel and local development
+const corsOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://spur-assignment.vercel.app',
+  process.env.FRONTEND_URL
+].filter((origin): origin is string => Boolean(origin));
+
+const corsOptions = {
+  origin: corsOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
 
 // Input validation schema
 const chatSchema = z.object({
