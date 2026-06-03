@@ -15,9 +15,22 @@ const adapter = new PrismaNeon({ connectionString });
 // 3. Instantiate PrismaClient with the adapter
 const prisma = new PrismaClient({ adapter });
 const app = express();
-app.use(cors());
+// Configure CORS for Vercel and local development
+const corsOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    process.env.FRONTEND_URL
+].filter((origin) => Boolean(origin));
+const corsOptions = {
+    origin: corsOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-// ... (Keep your chatSchema and routes exactly the same below this line)
+// Log CORS configuration for debugging
+console.log('CORS Origins Allowed:', corsOrigins);
 // Input validation schema
 const chatSchema = z.object({
     message: z.string().min(1, "Message cannot be empty").max(1000, "Message is too long"),
